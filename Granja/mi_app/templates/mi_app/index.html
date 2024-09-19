@@ -6,6 +6,27 @@
     <title>Document</title>
 </head>
 <body>
+    <form action="save" method="post">
+        {% csrf_token %}
+        <label for="cedula">cedula: </label>
+        <input id="cedula" type="number" name="cedula">
+
+        <label for="nombre">Your name: </label>
+        <input id="nombre" type="text" name="nombre">
+
+        <label for="apellidos">Your apellidos: </label>
+        <input id="apellidos" type="text" name="apellidos">
+
+        <label for="direccion">Your direccion: </label>
+        <input id="direccion" type="text" name="direccion">
+
+        <label for="telefono">Your telefono: </label>
+        <input id="telefono" type="number" name="telefono">
+
+        
+        <input type="submit" value="OK">
+    </form>
+
     <h1>{{foo}}</h1>
 </body>
 </html>
