@@ -1,15 +1,23 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 from django import forms
+from mi_app.models import Clientes
+
 
 # Create your views here.
 def my_view(request):
-   return render(
-    request,
-    "mi_app/index.html",
-    {
-        "foo": "bar",
-    })
+    # Crear una instancia del formulario
+    
+    return render(
+        request,
+        "mi_app/index.html",
+        {
+            "form": "form",
+        }
+
+    )
+
+
 
 # Define your form class
 class MyForm(forms.Form):
@@ -23,7 +31,13 @@ def add(request):
    if(request.method == 'POST'):
       form = MyForm(request.POST)
       if form.is_valid():
+        cedula = form.cleaned_data.get('cedula')
         nombre = form.cleaned_data.get('nombre')
+        apellidos = form.cleaned_data.get('apellidos')
+        direccion = form.cleaned_data.get('direccion')
+        telefono = form.cleaned_data.get('telefono')
+        cliente = Clientes(cedula, nombre, apellidos, direccion, telefono)
+        cliente.save()
         print(f'Nombre: {nombre}')
         return render(request, "mi_app/index.html", {"foo": nombre})
         
