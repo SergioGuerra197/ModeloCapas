@@ -19,6 +19,7 @@ from django.urls import path
 from mi_app.views import my_view, add, get, registrarCliente
 from mi_app.views import registrarPorcino, savePorcino, todosPorcino, deletePorcino, profilePorcino, porcinoHasAlimento, deletePorcinoHasAlimento
 from mi_app.views import listarAlimentos, registrarAlimento, saveAlimento, deleteAlimento
+from mi_app.views import reportClientes
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -37,6 +38,6 @@ urlpatterns = [
     path("porcino/profile/<int:idPorcino>", profilePorcino, name="profilePorcino"),
     path("porcino/profile/addalimento/<int:idPorcino>", porcinoHasAlimento, name="addAlimentoPorcino"),
     path("porcino/profile/deletealimento/<int:idPorcino>/<int:idAlimento>/", deletePorcinoHasAlimento, name="delete_alimento_porcino"),
-
+    path("report", reportClientes)
 
 ]
