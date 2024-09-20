@@ -1,25 +1,12 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django import forms
 from mi_app.models import Clientes
 
 
-def my_view(request):
-    
+def index(request):
     clientes = Clientes.objects.all()
-    
-    return render(
-        request,
-        "mi_app/index.html",
-        {
-            "form": "form",
-            "clientes": clientes
-        }
-
-    )
-
-
-
+    return render(request, 'mi_app/index.html', {'clientes': clientes})
 
 # Define your form class
 class MyForm(forms.Form):
@@ -41,7 +28,7 @@ def add(request):
         cliente = Clientes(cedula, nombre, apellidos, direccion, telefono)
         cliente.save()
         print(f'Nombre: {nombre}')
-        return render(request, "mi_app/index.html", {"foo": nombre})
+        return redirect('index')
         
       pass
    
