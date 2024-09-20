@@ -9,7 +9,7 @@ from django.db import models
 
 
 class Alimentacion(models.Model):
-    idalimentacion = models.IntegerField(db_column='idAlimentacion', primary_key=True)  # Field name made lowercase.
+    idalimentacion = models.AutoField(db_column='idAlimentacion', primary_key=True)  # Field name made lowercase.
     descripcion = models.CharField(db_column='Descripcion', max_length=1000)  # Field name made lowercase.
     dosis = models.FloatField()
 
@@ -168,7 +168,7 @@ class PorcinosHasAlimentacion(models.Model):
 
 
 class Razas(models.Model):
-    idrazas = models.IntegerField(db_column='idRazas', primary_key=True)  # Field name made lowercase.
+    idrazas = models.AutoField(db_column='idRazas', primary_key=True)  # Field name made lowercase.
     name = models.CharField(unique=True, max_length=45)
 
     class Meta:

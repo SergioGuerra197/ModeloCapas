@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <form action="{% url 'savePorcino' %}" method="post">
+        {% csrf_token %}
+
+        <!-- Mostrar todos los errores del formulario en una sola sección -->
+        {% if form.errors %}
+        <div>
+            <ul>
+                {% for field, errors in form.errors.items %}
+                    {% for error in errors %}
+                        <li>{{ error }}</li>
+                    {% endfor %}
+                {% endfor %}
+            </ul>
+        </div>
+        {% endif %}
+        
+        <label for="cedula">Cedula cliente: {{cliente.cedula}}</label>
+        <input id="cedula" type="hidden" name="cedula" value="{{ cliente.cedula }}">
+
+        <label for="nombre">nombre cliente: {{cliente.nombre}}  {{cliente.apellidos}}</label>
+
+        <label for="identificacion">identificacion porcino: </label>
+        <input id="identificacion" type="number" name="identificacion" value="{{ form.identificacion.value }}">
+
+        <label for="edad">edad: </label>
+        <input id="edad" type="number" name="edad" value="{{ form.edad.value }}">
+
+        <label for="peso">Peso: </label>
+        <input id="peso" type="text" name="peso" value="{{ form.peso.value }}">
+
+        <label for="razas">Selecciona una raza:</label>
+        <select name="razas" id="razas">
+            {% for raza in razas %}
+            <option value="{{ raza.idrazas }}" {% if form.razas.value == raza.idrazas %}selected{% endif %}>{{ raza.name }}</option>
+            {% endfor %}
+        </select>
+
+        <input type="submit" value="Registrar">
+    </form>
+
+</body>
+</html>

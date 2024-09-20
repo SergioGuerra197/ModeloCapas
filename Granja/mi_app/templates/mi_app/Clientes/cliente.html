@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <p>{{cliente.nombre}}</p>
+    <p>{{cliente.apellidos}}</p>
+    <p>{{cliente.cedula}}</p>
+    <p>{{cliente.telefono}}</p>
+
+    <button><a href="{% url 'registrarPorcino' cliente.cedula %}">Agregar porcino</a></button>
+    <ul>
+        {% for porcino in porcinos %}
+            <li>{{porcino.idporcinos}}</li>
+            <li>{{porcino.edad}}</li>
+            <li>{{porcino.peso}}</li>
+            <li>{{porcino.razas_idrazas.name}}</li>
+            <button><a href="">eliminar</a></button>
+        {% empty %}
+            <li>No cerdos registrados</li>
+        {% endfor %}
+    </ul>
+    
+
+    <button><a href="/">Volver</a></button>
+
+</body>
+</html>
