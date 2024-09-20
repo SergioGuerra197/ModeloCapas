@@ -18,9 +18,11 @@ from django.contrib import admin
 from django.urls import path
 from mi_app.views import add
 from mi_app.views import index
+from mi_app.views import get_cliente
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('',index, name='index'),
     path('save', add),
+    path('cliente/<str:cedula>/', get_cliente, name='get_cliente'),
 ]

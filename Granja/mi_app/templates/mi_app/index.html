@@ -97,7 +97,9 @@
                     <td>{{cliente.apellidos}}</td>
                     <td>{{cliente.direccion}}</td>
                     <td>
-                        <button type="button" class="btn btn-primary">
+
+                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#infoModal"
+                            onclick="loadClienteInfo('{{ cliente.cedula }}')">
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                                 class="bi bi-search" viewBox="0 0 16 16">
                                 <path
@@ -141,6 +143,26 @@
 
 </div>
 
+<!-- Modal -->
+<div class="modal fade" id="infoModal" tabindex="-1" aria-labelledby="infoModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="infoModalLabel">Información del Cliente</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <!-- Aquí se llenarán los datos del cliente de manera dinámica -->
+                <p><strong>Cédula:</strong> <span id="modal-cedula"></span></p>
+                <p><strong>Nombre:</strong> <span id="modal-nombre"></span></p>
+                <p><strong>Apellidos:</strong> <span id="modal-apellidos"></span></p>
+                <p><strong>Dirección:</strong> <span id="modal-direccion"></span></p>
+                <p><strong>Teléfono:</strong> <span id="modal-telefono"></span></p>
+            </div>
+        </div>
+    </div>
+</div>
+
 
 <!-- Modal -->
 <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -154,32 +176,32 @@
                 <div>
                     <form action="save" method="post">
                         {% csrf_token %}
-                        <!-- Campo para Cédula -->
+
                         <div class="mb-3">
                             <label for="cedula" class="form-label">Cédula:</label>
                             <input id="cedula" type="number" class="form-control" name="cedula" required>
                         </div>
-                        <!-- Campo para Nombre -->
+
                         <div class="mb-3">
                             <label for="nombre" class="form-label">Nombre:</label>
                             <input id="nombre" type="text" class="form-control" name="nombre" required>
                         </div>
-                        <!-- Campo para Apellidos -->
+
                         <div class="mb-3">
                             <label for="apellidos" class="form-label">Apellidos:</label>
                             <input id="apellidos" type="text" class="form-control" name="apellidos" required>
                         </div>
-                        <!-- Campo para Dirección -->
+
                         <div class="mb-3">
                             <label for="direccion" class="form-label">Dirección:</label>
                             <input id="direccion" type="text" class="form-control" name="direccion" required>
                         </div>
-                        <!-- Campo para Teléfono -->
+
                         <div class="mb-3">
                             <label for="telefono" class="form-label">Teléfono:</label>
                             <input id="telefono" type="number" class="form-control" name="telefono" required>
                         </div>
-                        <!-- Botón para Enviar -->
+
                         <input type="submit" class="btn btn-success" value="Agregar cliente">
                     </form>
                 </div>
@@ -191,52 +213,10 @@
 
 
 
+    {% block extra_js %}
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="{% static 'js/index.js' %}"></script>{% endblock %}
 
 
-
-
-
-
-
-
-
-
-
-
-
-    <!-- <ul>
-    {% for cliente in clientes %}
-    <div>
-        <li>{{cliente.nombre}}</li>
-        <li>{{cliente.apellidos}}</li>
-        <li>{{cliente.cedula}}</li>
-    </div>
-    <h3>hola</h3>
-    {% empty %}
-    <li>No articles yet.</li>
-    {% endfor %}
-</ul> -->
-
-    <!-- <div>
-    <form action="save" method="post">
-        {% csrf_token %}
-
-        <label for="cedula">cedula: </label>
-        <input id="cedula" type="number" name="cedula">
-
-        <label for="nombre">Your name: </label>
-        <input id="nombre" type="text" name="nombre">
-
-        <label for="apellidos">Your apellidos: </label>
-        <input id="apellidos" type="text" name="apellidos">
-
-        <label for="direccion">Your direccion: </label>
-        <input id="direccion" type="text" name="direccion">
-
-        <label for="telefono">Your telefono: </label>
-        <input id="telefono" type="number" name="telefono">
-
-        <input type="submit" value="OK">
-    </form> -->
 
     {% endblock %}

@@ -1,5 +1,5 @@
-from django.shortcuts import render, redirect
-from django.http import HttpResponse
+from django.shortcuts import get_object_or_404, render, redirect
+from django.http import HttpResponse, JsonResponse
 from django import forms
 from mi_app.models import Clientes
 
@@ -33,3 +33,18 @@ def add(request):
       pass
    
    return render(request, "mi_app/index.html")
+
+def get_cliente(request, cedula):
+    # Obtener el cliente de la base de datos según la cédula
+    cliente = get_object_or_404(Clientes, cedula=cedula)
+    
+    # Devolver los datos del cliente en formato JSON
+    data = {
+        'cedula': cliente.cedula,
+        'nombre': cliente.nombre,
+        'apellidos': cliente.apellidos,
+        'direccion': cliente.direccion,
+        'telefono': cliente.telefono,
+    }
+    print(data)
+    return JsonResponse(data)
