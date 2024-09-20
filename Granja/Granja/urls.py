@@ -21,7 +21,7 @@ from mi_app.views import my_view, add, get, registrarCliente, registrarPorcino, 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', my_view, name="home"),
-    path('save', add),
+    path('cliente/save', add),
     path("consulta/<int:cedula>", get, name="consulta"),
     path("cliente/registrar", registrarCliente),
     path("porcino/registrar/<int:cedula>",registrarPorcino, name="registrarPorcino"),

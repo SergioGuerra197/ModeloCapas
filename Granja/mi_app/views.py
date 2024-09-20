@@ -89,7 +89,6 @@ class PorcinoValidate(forms.Form):
         return peso
     
 def savePorcino(request):
-   cedula = 1040950043
    if(request.method == 'POST'):
          form = PorcinoValidate(request.POST)
          if form.is_valid():
