@@ -90,6 +90,9 @@ class PorcinoValidate(forms.Form):
     
 def savePorcino(request):
    if(request.method == 'POST'):
+         
+         cedula = request.POST.get("cedula")
+
          form = PorcinoValidate(request.POST)
          if form.is_valid():
              cliente = Clientes.objects.get(cedula = cedula)
