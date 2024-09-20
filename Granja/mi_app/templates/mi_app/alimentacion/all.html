@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Index</title>
+</head>
+<body>
+
+    <p>{{msg}}</p>
+    <ul>
+        {% for alimento in alimentos %}
+        <li>{{ forloop.counter }}</li>
+        <li>{{alimento.descripcion}}</li>
+        <li>{{alimento.dosis}}</li>
+        <button><a href="{% url 'deleteAlimento' alimento.idalimentacion %}">Eliminar</a></button>
+        {% empty %}
+        <li>No articles yet.</li>
+        {% endfor %}
+    </ul>
+    <button><a href="/alimentos/registrar">Registrar</a></button>
+    <button><a href="/">volver</a></button>
+
+
+
+</body>
+</html>

@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django import forms
-from mi_app.models import Clientes, Razas, Porcinos
+from mi_app.models import Clientes, Razas, Porcinos, Alimentacion, PorcinosHasAlimentacion
 
 
 # Create your views here.
@@ -135,8 +135,162 @@ def todosPorcino(request):
 def deletePorcino(request, idPorcino):
     porcino = Porcinos.objects.get(idporcinos = idPorcino)
     if(porcino):
-        cedulaCliente = porcino.clientes_cedula.cedula
+        alimentosPorcino = PorcinosHasAlimentacion.objects.filter(porcinos_idporcinos = porcino)
+
+        alimentosPorcino.delete()
+
         Porcinos.delete(porcino)
 
     return redirect('/')
-             
+
+def profilePorcino(request, idPorcino):
+    porcino = Porcinos.objects.get(idporcinos = idPorcino)
+    if(porcino):
+        Alimentos = Alimentacion.objects.all()
+        AlimentosPorcino = PorcinosHasAlimentacion.objects.filter(porcinos_idporcinos = porcino.idporcinos)
+        return render(request, "mi_app/porcinos/porcino.html", {
+            "porcino": porcino, 
+            "alimentos": Alimentos, 
+            "alimentosPorcino": AlimentosPorcino
+            })
+    
+    return redirect("/")
+
+def porcinoHasAlimento(request, idPorcino):
+    if(request.method == 'POST'):
+        alimentacion_id = request.POST.get('alimentacion')
+
+        try:
+            alimentacion = Alimentacion.objects.get(idalimentacion = alimentacion_id)
+        except:
+            return redirect("/")
+        
+        try:
+            porcino = Porcinos.objects.get(idporcinos = idPorcino)
+        except:
+            return redirect("/")
+        
+        porcinohasalimento = PorcinosHasAlimentacion(porcinos_idporcinos = porcino, alimentacion_idalimentacion = alimentacion)
+        
+        Alimentos = Alimentacion.objects.all()
+        AlimentosPorcino = PorcinosHasAlimentacion.objects.filter(porcinos_idporcinos = porcino.idporcinos)
+            
+        try:
+            porcinohasalimento.save()
+            msg = "Actualizacion realizada"
+            return render(request, "mi_app/porcinos/porcino.html", {
+                "porcino": porcino, 
+                "alimentos": Alimentos, 
+                "alimentosPorcino": AlimentosPorcino,
+                "msg": msg,
+                }) 
+
+        except:
+            msg = "No se puede guardar la opcion seleccionada"
+            return render(request, "mi_app/porcinos/porcino.html", {
+                "porcino": porcino, 
+                "alimentos": Alimentos, 
+                "alimentosPorcino": AlimentosPorcino,
+                "msg": msg,
+                }) 
+
+    
+    return redirect("/")
+
+def deletePorcinoHasAlimento(request, idPorcino, idAlimento):
+    porcino = Porcinos.objects.get(idporcinos = idPorcino)
+    alimento = Alimentacion.objects.get(idalimentacion = idAlimento)
+
+    Alimentos = Alimentacion.objects.all()
+    AlimentosPorcino = PorcinosHasAlimentacion.objects.filter(porcinos_idporcinos = porcino.idporcinos)
+
+    porcinoHasAlimento = PorcinosHasAlimentacion.objects.get(porcinos_idporcinos = porcino, alimentacion_idalimentacion = alimento)
+    if(porcinoHasAlimento):
+           
+        try:
+            porcinoHasAlimento.delete()
+            msg = "eliminacion realizada"
+
+            return render(request, "mi_app/porcinos/porcino.html", {
+                "porcino": porcino, 
+                "alimentos": Alimentos, 
+                "alimentosPorcino": AlimentosPorcino,
+                "msg": msg,
+                }) 
+        
+        except:
+            msg = "No se puede eliminar la opcion seleccionada"
+            return render(request, "mi_app/porcinos/porcino.html", {
+                "porcino": porcino, 
+                "alimentos": Alimentos, 
+                "alimentosPorcino": AlimentosPorcino,
+                "msg": msg,
+                }) 
+    
+    msg="error al eliminar"
+    return render(request, "mi_app/porcinos/porcino.html", {
+                "porcino": porcino, 
+                "alimentos": Alimentos, 
+                "alimentosPorcino": AlimentosPorcino,
+                "msg": msg,
+                }) 
+
+
+#------------------------------ ALIMENTACION -----------------------------------
+def listarAlimentos(request):
+    alimentos = Alimentacion.objects.all()
+    return render(request, "mi_app/alimentacion/all.html", {"alimentos": alimentos})
+
+def registrarAlimento(request):
+    return render(request, "mi_app/alimentacion/registrar.html")
+
+class AlimentacionValidate(forms.Form):
+    descripcion = forms.CharField(
+        label="Descripción", 
+        max_length=1000, 
+        error_messages={'required': 'La descripción es obligatoria.'}
+    )
+    dosis = forms.FloatField(
+        label="Dosis", 
+        min_value=0.1,  # La dosis no puede ser menor o igual a cero
+        error_messages={'required': 'La dosis es obligatoria.'}
+    )
+
+    # Validación personalizada para descripción
+    def clean_descripcion(self):
+        descripcion = self.cleaned_data.get('descripcion')
+        if len(descripcion) < 10:
+            raise forms.ValidationError("La descripción debe tener al menos 10 caracteres.")
+        return descripcion
+
+    # Validación personalizada para dosis
+    def clean_dosis(self):
+        dosis = self.cleaned_data.get('dosis')
+        if dosis <= 0:
+            raise forms.ValidationError("La dosis debe ser mayor a cero.")
+        return dosis
+
+def saveAlimento(request):
+    if(request.method == 'POST'):
+        form = AlimentacionValidate(request.POST)
+        if form.is_valid():
+            descripcion = form.cleaned_data.get('descripcion')
+            dosis = form.cleaned_data.get('dosis')
+
+            alimentacion = Alimentacion(descripcion = descripcion, dosis = dosis)
+            alimentacion.save()
+
+            return redirect("/alimentos/all")
+        else:
+            return render(request, 'mi_app/alimentacion/registrar.html', {"form": form})
+        
+    return redirect("/alimentos/all", {"msg": "Error de peticion al guardar el alimento"})
+
+def deleteAlimento(request, idalimentacion):
+    alimento = Alimentacion.objects.get(idalimentacion = idalimentacion)
+    if(alimento):
+        alimento.delete()
+        return render(request, "mi_app/alimentacion/all.html", {"msg": "Eliminacion completa"})
+    
+    return render(request, "mi_app/alimentacion/all.html", {"msg": "Error al eliminar el alimento"})
+            

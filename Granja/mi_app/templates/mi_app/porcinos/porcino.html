@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <p>{{msg}}</p>
+
+    <p>{{porcino.clientes_cedula.cedula}}</p>
+    <p>{{porcino.clientes_cedula.nombre}} {{porcino.clientes_cedula.apellidos}}</p>
+
+    <ul>
+        <li>{{porcino.idporcinos}}</li>
+        <li>{{porcino.edad}}</li>
+        <li>{{porcino.peso}}</li>
+        <li>{{porcino.razas_idrazas.name}}</li>
+
+        <div>
+            <form action="{% url 'addAlimentoPorcino' porcino.idporcinos %}" method="post">
+                {% csrf_token %}
+        
+                <label for="alimentacion">Añadir alimentacion:</label>
+                <select name="alimentacion" id="alimentacion">
+                    {% for alimento in alimentos %}
+                    <option value="{{ alimento.idalimentacion }}">{{ alimento.descripcion }} {{alimento.dosis}}</option>
+                    {% endfor %}
+                </select>
+                <input type="submit" value="Añadir">
+            </form>
+        </div>
+
+
+        <p>Alimentacion</p>
+        <ul>
+            {% for alimentoPorcino in alimentosPorcino %}
+                <li>{{alimentoPorcino.alimentacion_idalimentacion.descripcion}}</li>
+                <li>{{alimentoPorcino.alimentacion_idalimentacion.dosis}}</li>
+                <li><button><a href="{% url 'delete_alimento_porcino' alimentoPorcino.porcinos_idporcinos.idporcinos alimentoPorcino.alimentacion_idalimentacion.idalimentacion %}">eliminar</a></button></li>
+            {% empty %}
+                <li>No articles yet.</li>
+            {% endfor %}
+        </ul>
+    </ul>
+    
+
+    <button><a href="/">Volver</a></button>
+
+</body>
+</html>

@@ -9,13 +9,13 @@
 
     <ul>
         {% for porcino in porcinos %}
-        <li>{{porcino.clientes_cedula.nombre}} {{porcino.clientes_cedula.apellidos}}</li>
-        <li>{{porcino.idporcinos}}</li>
-        <li>{{porcino.edad}}</li>
-        <li>{{porcino.peso}}</li>
-        <li>{{porcino.razas_idrazas.name}}</li>
+            <li>{{porcino.clientes_cedula.nombre}} {{porcino.clientes_cedula.apellidos}}</li>
+            <li>{{porcino.idporcinos}}</li>
+            <li>{{porcino.edad}}</li>
+            <li>{{porcino.peso}}</li>
+            <li>{{porcino.razas_idrazas.name}}</li>
         {% empty %}
-        <li>No articles yet.</li>
+            <li>No articles yet.</li>
         {% endfor %}
     </ul>
 

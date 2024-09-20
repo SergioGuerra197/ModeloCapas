@@ -35,7 +35,7 @@
         <input id="edad" type="number" name="edad" value="{{ form.edad.value }}">
 
         <label for="peso">Peso: </label>
-        <input id="peso" type="text" name="peso" value="{{ form.peso.value }}">
+        <input id="peso" step="0.01" type="number" name="peso" value="{{ form.peso.value }}">
 
         <label for="razas">Selecciona una raza:</label>
         <select name="razas" id="razas">
@@ -46,6 +46,8 @@
 
         <input type="submit" value="Registrar">
     </form>
+
+    <button><a href="/">Volver</a></button>
 
 </body>
 </html>
