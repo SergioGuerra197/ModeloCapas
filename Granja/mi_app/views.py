@@ -124,4 +124,8 @@ def savePorcino(request):
              
    
    return redirect('/')
+
+def todosPorcino(request):
+    porcinos = Porcinos.objects.all()
+    return render(request, "mi_app/porcinos/all.html", {"porcinos": porcinos})
              

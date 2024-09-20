@@ -8,18 +8,19 @@
 <body>
 
     <ul>
-        {% for cliente in clientes %}
-        <li>{{cliente.nombre}}</li>
-        <li>{{cliente.apellidos}}</li>
-        <li>{{cliente.cedula}}</li>
-        <button><a href="{% url 'consulta' cliente.cedula %}">Consultar</a></button>
+        {% for porcino in porcinos %}
+        <li>{{porcino.clientes_cedula.nombre}} {{porcino.clientes_cedula.apellidos}}</li>
+        <li>{{porcino.idporcinos}}</li>
+        <li>{{porcino.edad}}</li>
+        <li>{{porcino.peso}}</li>
+        <li>{{porcino.razas_idrazas.name}}</li>
         {% empty %}
         <li>No articles yet.</li>
         {% endfor %}
     </ul>
 
+    <button><a href="/">volver</a></button>
     <button><a href="/cliente/registrar">Registrar cliente</a></button>
-    <button><a href="/porcino/all">Todos los porcinos</a></button>
 
 </body>
 </html>
