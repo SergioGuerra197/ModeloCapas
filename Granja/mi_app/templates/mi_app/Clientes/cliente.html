@@ -19,7 +19,7 @@
             <li>{{porcino.edad}}</li>
             <li>{{porcino.peso}}</li>
             <li>{{porcino.razas_idrazas.name}}</li>
-            <button><a href="">eliminar</a></button>
+            <button><a href="{% url 'deletePorcino' porcino.idporcinos %}">eliminar</a></button>
         {% empty %}
             <li>No cerdos registrados</li>
         {% endfor %}

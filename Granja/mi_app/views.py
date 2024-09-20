@@ -128,4 +128,12 @@ def savePorcino(request):
 def todosPorcino(request):
     porcinos = Porcinos.objects.all()
     return render(request, "mi_app/porcinos/all.html", {"porcinos": porcinos})
+
+def deletePorcino(request, idPorcino):
+    porcino = Porcinos.objects.get(idporcinos = idPorcino)
+    if(porcino):
+        cedulaCliente = porcino.clientes_cedula.cedula
+        Porcinos.delete(porcino)
+
+    return redirect('/')
              
