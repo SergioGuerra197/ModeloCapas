@@ -4,18 +4,20 @@ from django import forms
 from mi_app.models import Clientes
 
 
-# Create your views here.
 def my_view(request):
-    # Crear una instancia del formulario
+    
+    clientes = Clientes.objects.all()
     
     return render(
         request,
         "mi_app/index.html",
         {
             "form": "form",
+            "clientes": clientes
         }
 
     )
+
 
 
 

@@ -4,7 +4,20 @@
 
 {% block content %}
 
-<div>
+<ul>
+    {% for cliente in clientes %}
+    <div>
+        <li>{{cliente.nombre}}</li>
+        <li>{{cliente.apellidos}}</li>
+        <li>{{cliente.cedula}}</li>
+    </div>
+    <h3>hola</h3>
+    {% empty %}
+    <li>No articles yet.</li>
+    {% endfor %}
+</ul>
+
+<!-- <div>
     <form action="save" method="post">
         {% csrf_token %}
 
@@ -24,8 +37,6 @@
         <input id="telefono" type="number" name="telefono">
 
         <input type="submit" value="OK">
-    </form>
+    </form> -->
 
-
-
-    {% endblock %}
+{% endblock %}
