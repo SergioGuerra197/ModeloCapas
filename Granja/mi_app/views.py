@@ -71,6 +71,21 @@ def get(request, cedula):
    print(porcinos)
    return render(request, "mi_app/clientes/cliente.html", {"cliente": cliente, "porcinos": porcinos})
 
+def eliminarCliente(request, cedula):
+    cliente = Clientes.objects.get(cedula = cedula)
+    if(cliente):
+        porcinos = Porcinos.objects.filter(clientes_cedula = cliente)
+        for porcino in porcinos:
+            alimentosPorcino = PorcinosHasAlimentacion.objects.filter(porcinos_idporcinos = porcino)
+
+            alimentosPorcino.delete()
+        porcinos.delete()
+        cliente.delete()
+
+        return redirect("/")
+    return redirect("/")
+
+
 
 #-------------------------------------- PORCINOS ----------------------------------
 def registrarPorcino(request, cedula):
