@@ -36,3 +36,8 @@ function loadClienteInfo(cedula) {
         }
     });
 }
+
+function setEliminarCliente(cedula) {
+    // Establecer la URL de eliminación en el botón de confirmación del modal
+    document.getElementById('confirmarEliminarBtn').href = '/eliminar_cliente/' + cedula + '/';
+}

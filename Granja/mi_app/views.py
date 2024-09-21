@@ -1,7 +1,7 @@
 from django.shortcuts import get_object_or_404, render, redirect
 from django.http import HttpResponse, JsonResponse
 from django import forms
-from mi_app.models import Clientes, Porcinos
+from mi_app.models import Clientes, Porcinos, PorcinosHasAlimentacion
 
 
 def index(request):
@@ -60,3 +60,17 @@ def get_cliente(request, cedula):
 
     print(data)
     return JsonResponse(data)
+
+def eliminarCliente(request, cedula):
+    cliente = Clientes.objects.get(cedula = cedula)
+    if(cliente):
+        porcinos = Porcinos.objects.filter(clientes_cedula = cliente)
+        for porcino in porcinos:
+            alimentosPorcino = PorcinosHasAlimentacion.objects.filter(porcinos_idporcinos = porcino)
+
+            alimentosPorcino.delete()
+        porcinos.delete()
+        cliente.delete()
+
+        return redirect("index")
+    return redirect("index")

@@ -16,7 +16,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from mi_app.views import add
+from mi_app.views import add, eliminarCliente
 from mi_app.views import index
 from mi_app.views import get_cliente
 
@@ -25,4 +25,5 @@ urlpatterns = [
     path('',index, name='index'),
     path('save', add),
     path('cliente/<str:cedula>/', get_cliente, name='get_cliente'),
+    path('eliminar_cliente/<str:cedula>/', eliminarCliente, name='eliminar_cliente')
 ]
