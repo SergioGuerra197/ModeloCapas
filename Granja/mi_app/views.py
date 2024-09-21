@@ -1,7 +1,7 @@
 from django.shortcuts import get_object_or_404, render, redirect
 from django.http import HttpResponse, JsonResponse
 from django import forms
-from mi_app.models import Clientes
+from mi_app.models import Clientes, Porcinos
 
 
 def index(request):
@@ -36,15 +36,27 @@ def add(request):
 
 def get_cliente(request, cedula):
     # Obtener el cliente de la base de datos según la cédula
+
     cliente = get_object_or_404(Clientes, cedula=cedula)
-    
-    # Devolver los datos del cliente en formato JSON
+    # Obtener los cerdos asociados a este cliente
+    cerdos = Porcinos.objects.filter(clientes_cedula=cedula)
+
+    # Preparar la información del cliente
     data = {
         'cedula': cliente.cedula,
         'nombre': cliente.nombre,
         'apellidos': cliente.apellidos,
         'direccion': cliente.direccion,
         'telefono': cliente.telefono,
+        'cerdos': [
+            {
+                'id': cerdo.idporcinos,
+                'edad': cerdo.edad,
+                'peso': cerdo.peso,
+                'raza': cerdo.razas_idrazas.name  # Asumiendo que tienes un campo 'razas_idrazas' con 'name'
+            } for cerdo in cerdos
+        ]
     }
+
     print(data)
     return JsonResponse(data)

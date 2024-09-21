@@ -11,6 +11,23 @@ function loadClienteInfo(cedula) {
             $('#modal-direccion').text(response.direccion);
             $('#modal-telefono').text(response.telefono);
         // Mostrar el modal
+
+        if (response.cerdos.length > 0) {
+            response.cerdos.forEach(function(cerdo) {
+                $('#cerdos-list').append(
+                    '<li class="list-group-item">' +
+                    '<strong>ID:</strong> ' + cerdo.id + '<br>' +
+                    '<strong>Edad:</strong> ' + cerdo.edad + ' años<br>' +
+                    '<strong>Peso:</strong> ' + cerdo.peso + ' kg<br>' +
+                    '<strong>Raza:</strong> ' + cerdo.raza +
+                    '</li>'
+                );
+            });
+        } else {
+            // Si no hay cerdos asociados
+            $('#cerdos-list').append('<li class="list-group-item">No hay porcinos registrados para este cliente.</li>');
+        }
+
         $('#infoModal').modal('show');
 
         },
