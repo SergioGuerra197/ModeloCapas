@@ -85,7 +85,44 @@ def eliminarCliente(request, cedula):
         return redirect("/")
     return redirect("/")
 
+def actualizarCliente(request, cedula):
+    try:
+        # Buscar el cliente por su cédula
+        cliente = Clientes.objects.get(cedula=cedula)
 
+        # Si el método es POST, entonces estamos procesando el formulario de actualización
+        if request.method == 'POST':
+            form = ClienteValidate(request.POST)
+            
+            if form.is_valid():
+                # Actualizar los campos del cliente con los datos validados del formulario
+                cliente.nombre = form.cleaned_data['nombre']
+                cliente.apellidos = form.cleaned_data['apellidos']
+                cliente.direccion = form.cleaned_data['direccion']
+                cliente.telefono = form.cleaned_data['telefono']
+                
+                # Guardar los cambios en la base de datos
+                cliente.save()
+
+                # Redirigir a la vista del cliente o a la lista de clientes
+                return redirect('home')
+        
+        else:
+            # Si el método no es POST, mostrar el formulario con los datos actuales del cliente
+            form = ClienteValidate(initial={
+                'cedula': cliente.cedula,
+                'nombre': cliente.nombre,
+                'apellidos': cliente.apellidos,
+                'direccion': cliente.direccion,
+                'telefono': cliente.telefono,
+            })
+
+        # Renderizar el formulario para editar al cliente
+        return render(request, 'mi_app/clientes/actualizar.html', {'form': form, 'cliente': cliente})
+
+    except Clientes.DoesNotExist:
+        # Si no se encuentra el cliente, redirigir a la página principal
+        return redirect('home')
 
 #-------------------------------------- PORCINOS ----------------------------------
 def registrarPorcino(request, cedula):

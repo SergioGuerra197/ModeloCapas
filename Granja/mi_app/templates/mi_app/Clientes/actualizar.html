@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Actualizar Cliente</title>
+</head>
+<body>
+    
+    <h2>Actualizar Cliente</h2>
+    
+    <form action="" method="post">
+        {% csrf_token %}
+        
+        <label for="cedula">Cédula: </label>
+        <!-- Mostrar el valor actual de la cédula pero deshabilitado, ya que no debería ser editable -->
+        <input id="cedula" type="number" name="cedula" value="{{ form.cedula.value }}" readonly><br><br>
+
+        <label for="nombre">Nombre: </label>
+        <input id="nombre" type="text" name="nombre" value="{{ form.nombre.value }}"><br><br>
+
+        <label for="apellidos">Apellidos: </label>
+        <input id="apellidos" type="text" name="apellidos" value="{{ form.apellidos.value }}"><br><br>
+
+        <label for="direccion">Dirección: </label>
+        <input id="direccion" type="text" name="direccion" value="{{ form.direccion.value }}"><br><br>
+
+        <label for="telefono">Teléfono: </label>
+        <input id="telefono" type="number" name="telefono" value="{{ form.telefono.value }}"><br><br>
+
+        <input type="submit" value="Actualizar">
+    </form>
+
+</body>
+</html>

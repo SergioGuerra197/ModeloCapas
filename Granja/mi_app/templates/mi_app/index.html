@@ -14,6 +14,7 @@
         <li>{{cliente.cedula}}</li>
         <button><a href="{% url 'consulta' cliente.cedula %}">Consultar</a></button>
         <button><a href="{% url 'eliminarCliente' cliente.cedula %}">Eliminar</a></button>
+        <button><a href="{% url 'actualizarCliente' cliente.cedula %}">Actualizar</a></button>
         {% empty %}
         <li>No articles yet.</li>
         {% endfor %}
