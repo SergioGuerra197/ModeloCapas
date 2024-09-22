@@ -74,3 +74,23 @@ def eliminarCliente(request, cedula):
 
         return redirect("index")
     return redirect("index")
+
+
+def actualizarCliente(request, cedula):
+    # Obtener el cliente por su cédula
+    cliente = get_object_or_404(Clientes, cedula=cedula)
+    
+    if request.method == 'POST':
+        # Actualizar los campos del cliente con los datos enviados en el formulario
+        cliente.nombre = request.POST.get('nombre')
+        cliente.apellidos = request.POST.get('apellidos')
+        cliente.direccion = request.POST.get('direccion')
+        cliente.telefono = request.POST.get('telefono')
+        
+        # Guardar los cambios en la base de datos
+        cliente.save()
+
+        # Redirigir a la página principal después de actualizar
+        return redirect('index')
+
+    return HttpResponse("Método no permitido", status=405)

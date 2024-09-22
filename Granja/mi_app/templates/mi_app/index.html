@@ -118,7 +118,8 @@
                             </svg>
                         </button>
 
-                        <button type="button" class="btn btn-warning">
+                        <button type="button" class="btn btn-warning" data-bs-toggle="modal"
+                            onclick="setEditarCliente('{{ cliente.cedula }}')">
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                                 class="bi bi-pencil" viewBox="0 0 16 16">
                                 <path
@@ -144,7 +145,54 @@
 
 </div>
 
-<!-- Modal -->
+<!-- Modal modificar información del cliente -->
+<!-- Modal para editar la información del cliente -->
+<div class="modal fade" id="editarClienteModal" tabindex="-1" aria-labelledby="editarClienteLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="editarClienteLabel">Editar Información del Cliente</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <!-- Formulario para actualizar el cliente -->
+                <form id="formEditarCliente" method="POST" action="#">
+                    {% csrf_token %}
+                    <!-- Campo para Cédula (no editable) -->
+                    <div class="mb-3">
+                        <label for="cedula" class="form-label">Cédula:</label>
+                        <input id="modal-cedula" type="text" class="form-control" name="cedula" readonly>
+                    </div>
+                    <!-- Campo para Nombre -->
+                    <div class="mb-3">
+                        <label for="nombre" class="form-label">Nombre:</label>
+                        <input id="modal-nombre" type="text" class="form-control" name="nombre" required>
+                    </div>
+                    <!-- Campo para Apellidos -->
+                    <div class="mb-3">
+                        <label for="apellidos" class="form-label">Apellidos:</label>
+                        <input id="modal-apellidos" type="text" class="form-control" name="apellidos" required>
+                    </div>
+                    <!-- Campo para Dirección -->
+                    <div class="mb-3">
+                        <label for="direccion" class="form-label">Dirección:</label>
+                        <input id="modal-direccion" type="text" class="form-control" name="direccion" required>
+                    </div>
+                    <!-- Campo para Teléfono -->
+                    <div class="mb-3">
+                        <label for="telefono" class="form-label">Teléfono:</label>
+                        <input id="modal-telefono" type="text" class="form-control" name="telefono" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Guardar Cambios</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<!-- Modal mostrar información detallada -->
 <div class="modal fade" id="infoModal" tabindex="-1" aria-labelledby="infoModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -194,7 +242,7 @@
 
 
 
-<!-- Modal -->
+<!-- Modal agregar cliente -->
 <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">

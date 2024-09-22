@@ -19,11 +19,13 @@ from django.urls import path
 from mi_app.views import add, eliminarCliente
 from mi_app.views import index
 from mi_app.views import get_cliente
+from mi_app.views import actualizarCliente
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('',index, name='index'),
     path('save', add),
     path('cliente/<str:cedula>/', get_cliente, name='get_cliente'),
-    path('eliminar_cliente/<str:cedula>/', eliminarCliente, name='eliminar_cliente')
+    path('eliminar_cliente/<str:cedula>/', eliminarCliente, name='eliminar_cliente'),
+    path('actualizar_cliente/<str:cedula>/', actualizarCliente, name='actualizar_cliente'),
 ]
