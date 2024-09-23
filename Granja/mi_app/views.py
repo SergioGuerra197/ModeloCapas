@@ -4,6 +4,17 @@ from django import forms
 from mi_app.models import Clientes, Porcinos, PorcinosHasAlimentacion, Razas
 
 
+from datetime import datetime
+from reportlab.lib.styles import getSampleStyleSheet
+from reportlab.lib.enums import TA_CENTER
+from reportlab.platypus import Paragraph, Table, TableStyle
+from reportlab.lib import colors
+from io import BytesIO
+from reportlab.pdfgen import canvas
+from reportlab.lib.pagesizes import A4
+from django.http import HttpResponse
+from reportlab.lib.units import cm
+
 def index(request):
     clientes = Clientes.objects.all()
     razas = Razas.objects.all()
@@ -124,3 +135,86 @@ def agregar_porcino(request):
         return redirect('index')
 
     return HttpResponse('Método no permitido', status=405)
+
+
+def reportClientes(request):
+    response = HttpResponse(content_type='application/pdf')
+    response['Content-Disposition'] = 'attachment; filename=Clientes-report.pdf'
+
+    buffer = BytesIO()
+    c = canvas.Canvas(buffer, pagesize=A4)
+
+    c.setLineWidth(.3)
+    c.setFont('Helvetica', 22)
+    c.drawString(30,750,'Granjas SA')
+    c.setFont('Helvetica', 12)
+    c.drawString(30, 735, 'Reporte')
+
+    fecha_actual = datetime.now()
+    fecha_formateada = fecha_actual.strftime("%Y-%m-%d")
+
+    c.setFont('Helvetica-Bold', 12)
+    c.drawString(480, 750, fecha_formateada)
+
+    c.line(460, 747, 560, 747)
+
+    #Table header
+    styles = getSampleStyleSheet()
+    styleBH = styles["Normal"]
+    styleBH.alignment = TA_CENTER
+    styleBH.fontSyze = 10
+
+    numero = Paragraph('''No. ''', styleBH)
+    cliente = Paragraph('''Nombre completo ''', styleBH)
+    cedula = Paragraph('''C.C. ''', styleBH)
+    direccion = Paragraph('''direccion ''', styleBH)
+    telefono = Paragraph('''telefono ''', styleBH)
+    numeroPorcinos = Paragraph('''No. Porcinos ''', styleBH)
+
+    data = []
+    data.append([numero, cliente, cedula, direccion, telefono, numeroPorcinos])
+
+    styles = getSampleStyleSheet()
+    styleBH = styles["BodyText"]
+    styleBH.alignment = TA_CENTER
+    styleBH.fontSyze = 7
+
+    width, height = A4
+    high = 650
+
+    clientes = Clientes.objects.all()
+
+    counter = 0
+    for cliente in clientes:
+        porcinos = Porcinos.objects.filter(clientes_cedula = cliente)
+        this_cliente = [str(counter+1) + ".", 
+                        cliente.nombre + " " + cliente.apellidos, 
+                        cliente.cedula,
+                        cliente.direccion,
+                        cliente.telefono,
+                        len(porcinos)
+                        ]
+        counter += 1
+        data.append(this_cliente)
+
+        high = high-18
+
+    #tabla size
+    width, height = A4
+    table = Table(data, colWidths=[1.9*cm, 5.5*cm, 2.9*cm,2.9*cm,2.9*cm,2.9*cm])
+    table.setStyle(TableStyle([('INNERGRID', (0,0), (-1,-1), 0.25, colors.black),
+                               ('BOX', (0,0), (-1, -1), 0.25, colors.black),
+                               ]))
+
+    table.wrapOn(c, width, height)
+    table.drawOn(c, 30, high)
+    c.showPage()
+
+    c.save()
+    pdf = buffer.getvalue()
+    buffer.close()
+    response.write(pdf)
+    return response
+
+
+#----------------- REPORTES -------------------------------

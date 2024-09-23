@@ -20,6 +20,7 @@ from mi_app.views import add, eliminarCliente, porcinos, agregar_porcino
 from mi_app.views import index
 from mi_app.views import get_cliente
 from mi_app.views import actualizarCliente
+from mi_app.views import reportClientes
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -30,4 +31,5 @@ urlpatterns = [
     path('eliminar_cliente/<str:cedula>/', eliminarCliente, name='eliminar_cliente'),
     path('actualizar_cliente/<str:cedula>/', actualizarCliente, name='actualizar_cliente'),
     path('agregar_porcino', agregar_porcino, name='agregar_porcino'),
+    path("report", reportClientes),
 ]
