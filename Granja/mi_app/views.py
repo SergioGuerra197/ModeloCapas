@@ -1,12 +1,13 @@
 from django.shortcuts import get_object_or_404, render, redirect
 from django.http import HttpResponse, JsonResponse
 from django import forms
-from mi_app.models import Clientes, Porcinos, PorcinosHasAlimentacion
+from mi_app.models import Clientes, Porcinos, PorcinosHasAlimentacion, Razas
 
 
 def index(request):
     clientes = Clientes.objects.all()
-    return render(request, 'mi_app/index.html', {'clientes': clientes})
+    razas = Razas.objects.all()
+    return render(request, 'mi_app/index.html', {'clientes': clientes, 'razas':razas})
 
 def porcinos(request):
     porcinos = Porcinos.objects.all()
@@ -99,3 +100,27 @@ def actualizarCliente(request, cedula):
         return redirect('index')
 
     return HttpResponse("Método no permitido", status=405)
+
+
+# Agregar porcino desde cliente 
+def agregar_porcino(request):
+    if request.method == 'POST':
+        # Obtener los datos del formulario
+        cliente_cedula = request.POST.get('cliente_cedula')
+        edad = request.POST.get('edad')
+        peso = request.POST.get('peso')
+        raza_id = request.POST.get('razas_idrazas')  # Obtener el ID de la raza seleccionada
+
+        # Buscar el cliente en la base de datos
+        cliente = get_object_or_404(Clientes, cedula=cliente_cedula)
+        print(cliente)
+        # Buscar la raza seleccionada en la base de datos usando el ID
+        raza = get_object_or_404(Razas, idrazas=raza_id)
+        print(raza)
+        # Crear un nuevo porcino y asociarlo al cliente y la raza
+        porcino = Porcinos(edad=edad, peso=peso, razas_idrazas=raza, clientes_cedula=cliente)
+        porcino.save()
+        # Redirigir a la página de porcinos o a donde prefieras
+        return redirect('index')
+
+    return HttpResponse('Método no permitido', status=405)

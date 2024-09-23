@@ -20,7 +20,7 @@
                     dirección, y demas información desde los botones en la sección de acciones.</p>
                 <button type="button" class="btn btn-success py-4 my-4" data-bs-toggle="modal"
                     data-bs-target="#exampleModal">
-                    Regsitrar cliente
+                    Registrar cliente
                 </button>
             </div>
 
@@ -128,7 +128,8 @@
                             </svg>
                         </button>
 
-                        <button type="button" class="btn btn-secondary">
+                        <button type="button" class="btn btn-secondary" data-bs-toggle="modal"
+                            data-bs-target="#porcinoClienteModal" onclick="setClienteCedula('{{ cliente.cedula }}')">
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                                 class="bi bi-plus" viewBox="0 0 16 16">
                                 <path
@@ -146,51 +147,47 @@
 
 </div>
 
-<!-- Modal modificar información del cliente -->
-<!-- Modal para editar la información del cliente -->
-<div class="modal fade" id="editarClienteModal" tabindex="-1" aria-labelledby="editarClienteLabel" aria-hidden="true">
+<!-- Modal para ingresar porcino  -->
+<div class="modal fade" id="porcinoClienteModal" tabindex="-1" aria-labelledby="porcinoClienteLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="editarClienteLabel">Editar Información del Cliente</h5>
+                <h5 class="modal-title" id="porcinoClienteLabel">Agregar porcino</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <!-- Formulario para actualizar el cliente -->
-                <form id="formEditarCliente" method="POST" action="#">
-                    {% csrf_token %}
-                    <!-- Campo para Cédula (no editable) -->
-                    <div class="mb-3">
-                        <label for="cedula" class="form-label">Cédula:</label>
-                        <input id="modal-cedula" type="text" class="form-control" name="cedula" readonly>
-                    </div>
-                    <!-- Campo para Nombre -->
-                    <div class="mb-3">
-                        <label for="nombre" class="form-label">Nombre:</label>
-                        <input id="modal-nombre" type="text" class="form-control" name="nombre" required>
-                    </div>
-                    <!-- Campo para Apellidos -->
-                    <div class="mb-3">
-                        <label for="apellidos" class="form-label">Apellidos:</label>
-                        <input id="modal-apellidos" type="text" class="form-control" name="apellidos" required>
-                    </div>
-                    <!-- Campo para Dirección -->
-                    <div class="mb-3">
-                        <label for="direccion" class="form-label">Dirección:</label>
-                        <input id="modal-direccion" type="text" class="form-control" name="direccion" required>
-                    </div>
-                    <!-- Campo para Teléfono -->
-                    <div class="mb-3">
-                        <label for="telefono" class="form-label">Teléfono:</label>
-                        <input id="modal-telefono" type="text" class="form-control" name="telefono" required>
-                    </div>
-                    <button type="submit" class="btn btn-primary">Guardar Cambios</button>
+                <div>
+                    <form action="agregar_porcino" method="post">
+                        {% csrf_token %}
+
+                        <input type="hidden" id="cliente_cedula" name="cliente_cedula">
+
+                        <div class="mb-3">
+                            <label for="edad" class="form-label">Edad:</label>
+                            <input id="edad" type="number" class="form-control" name="edad" required>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="peso" class="form-label">Peso:</label>
+                            <input id="peso" type="text" class="form-control" name="peso" required>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="razas_idrazas" class="form-label">Raza:</label>
+                            <select id="razas_idrazas" name="razas_idrazas" class="form-control" required>
+                                <option value="">Selecciona una raza</option>
+                                {% for raza in razas %}
+                                <option value="{{ raza.idrazas }}">{{ raza.name }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                </div>
+                <input type="submit" class="btn btn-success">
                 </form>
             </div>
         </div>
     </div>
 </div>
-
 
 
 <!-- Modal mostrar información detallada -->
@@ -219,6 +216,55 @@
         </div>
     </div>
 </div>
+
+
+<!-- Modal modificar información del cliente -->
+<!-- Modal para editar la información del cliente -->
+<div class="modal fade" id="editarClienteModal" tabindex="-1" aria-labelledby="editarClienteLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="editarClienteLabel">Editar Información del Cliente</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <!-- Formulario para actualizar el cliente -->
+                <form id="formEditarCliente" method="POST" action="#">
+                    {% csrf_token %}
+                    <!-- Campo para Cédula (no editable) -->
+                    <div class="mb-3">
+                        <label for="cedula" class="form-label">Cédula:</label>
+                        <input id="modal-cedula-mod" type="text" class="form-control" name="cedula" readonly>
+                    </div>
+                    <!-- Campo para Nombre -->
+                    <div class="mb-3">
+                        <label for="nombre" class="form-label">Nombre:</label>
+                        <input id="modal-nombre-mod" type="text" class="form-control" name="nombre" required>
+                    </div>
+                    <!-- Campo para Apellidos -->
+                    <div class="mb-3">
+                        <label for="apellidos" class="form-label">Apellidos:</label>
+                        <input id="modal-apellidos-mod" type="text" class="form-control" name="apellidos" required>
+                    </div>
+                    <!-- Campo para Dirección -->
+                    <div class="mb-3">
+                        <label for="direccion" class="form-label">Dirección:</label>
+                        <input id="modal-direccion-mod" type="text" class="form-control" name="direccion" required>
+                    </div>
+                    <!-- Campo para Teléfono -->
+                    <div class="mb-3">
+                        <label for="telefono" class="form-label">Teléfono:</label>
+                        <input id="modal-telefono-mod" type="text" class="form-control" name="telefono" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Guardar Cambios</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
 
 <!-- Modal de confirmación de eliminación -->
 <div class="modal fade" id="eliminarClienteModal" tabindex="-1" aria-labelledby="eliminarClienteLabel"

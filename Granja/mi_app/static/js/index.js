@@ -12,21 +12,21 @@ function loadClienteInfo(cedula) {
             $('#modal-direccion').text(response.direccion);
             $('#modal-telefono').text(response.telefono);
 
-
             $('#cerdos-list').empty();
-        // Mostrar el modal
-
-        if (response.cerdos.length > 0) {
-            response.cerdos.forEach(function(cerdo) {
-                $('#cerdos-list').append(
-                    '<li class="list-group-item">' +
-                    '<strong>ID:</strong> ' + cerdo.id + '<br>' +
-                    '<strong>Edad:</strong> ' + cerdo.edad + ' años<br>' +
-                    '<strong>Peso:</strong> ' + cerdo.peso + ' kg<br>' +
-                    '<strong>Raza:</strong> ' + cerdo.raza +
-                    '</li>'
-                );
-            });
+            // Mostrar el modal
+            
+            if (response.cerdos.length > 0) {
+                response.cerdos.forEach(function(cerdo) {
+                    $('#cerdos-list').append(
+                        '<li class="list-group-item">' +
+                        '<strong>ID:</strong> ' + cerdo.id + '<br>' +
+                        '<strong>Edad:</strong> ' + cerdo.edad + ' años<br>' +
+                        '<strong>Peso:</strong> ' + cerdo.peso + ' kg<br>' +
+                        '<strong>Raza:</strong> ' + cerdo.raza +
+                        '</li>'
+                    );
+                });
+                console.log(response)
         } else {
             // Si no hay cerdos asociados
             $('#cerdos-list').append('<li class="list-group-item">No hay porcinos registrados para este cliente.</li>');
@@ -42,11 +42,6 @@ function loadClienteInfo(cedula) {
     });
 }
 
-// Funcion para eliminar cliente 
-function setEliminarCliente(cedula) {
-    // Establecer la URL de eliminación en el botón de confirmación del modal
-    document.getElementById('confirmarEliminarBtn').href = '/eliminar_cliente/' + cedula + '/';
-}
 
 
 // Funcion para editar cliente 
@@ -57,11 +52,11 @@ function setEditarCliente(cedula) {
         type: 'GET',
         success: function(response) {
             // Llenar los campos del modal con los datos del cliente
-            $('#modal-cedula').val(response.cedula);
-            $('#modal-nombre').val(response.nombre);
-            $('#modal-apellidos').val(response.apellidos);
-            $('#modal-direccion').val(response.direccion);
-            $('#modal-telefono').val(response.telefono);
+            $('#modal-cedula-mod').val(response.cedula);
+            $('#modal-nombre-mod').val(response.nombre);
+            $('#modal-apellidos-mod').val(response.apellidos);
+            $('#modal-direccion-mod').val(response.direccion);
+            $('#modal-telefono-mod').val(response.telefono);
             
             // Cambiar la acción del formulario para que apunte a la vista de actualización
             $('#formEditarCliente').attr('action', '/actualizar_cliente/' + response.cedula + '/');
@@ -74,3 +69,15 @@ function setEditarCliente(cedula) {
         }
     });
 }
+
+// Funcion para eliminar cliente 
+function setEliminarCliente(cedula) {
+    // Establecer la URL de eliminación en el botón de confirmación del modal
+    document.getElementById('confirmarEliminarBtn').href = '/eliminar_cliente/' + cedula + '/';
+}
+
+function setClienteCedula(cedula){
+    document.getElementById('cliente_cedula').value = cedula;
+    console.log(cedula)
+}
+

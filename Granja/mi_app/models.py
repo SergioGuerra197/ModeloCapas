@@ -145,15 +145,13 @@ class DjangoSession(models.Model):
 
 
 class Porcinos(models.Model):
-    idporcinos = models.IntegerField(db_column='idPorcinos', primary_key=True)  # Field name made lowercase.
+    idporcinos = models.AutoField(db_column='idPorcinos', primary_key=True)  # Field name made lowercase.
     edad = models.IntegerField(db_column='Edad', blank=True, null=True)  # Field name made lowercase.
     peso = models.IntegerField(db_column='Peso', blank=True, null=True)  # Field name made lowercase.
-    porcinoscol = models.CharField(db_column='Porcinoscol', max_length=45, blank=True, null=True)  # Field name made lowercase.
     razas_idrazas = models.ForeignKey('Razas', models.DO_NOTHING, db_column='Razas_idRazas')  # Field name made lowercase.
     clientes_cedula = models.ForeignKey(Clientes, models.DO_NOTHING, db_column='Clientes_cedula')  # Field name made lowercase.
 
     class Meta:
-        managed = False
         db_table = 'porcinos'
 
 
