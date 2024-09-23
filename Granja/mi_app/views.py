@@ -8,6 +8,11 @@ def index(request):
     clientes = Clientes.objects.all()
     return render(request, 'mi_app/index.html', {'clientes': clientes})
 
+def porcinos(request):
+    porcinos = Porcinos.objects.all()
+    print(porcinos)
+    return render(request, 'mi_app/porcinos.html', {'porcinos': porcinos})
+
 # Define your form class
 class MyForm(forms.Form):
     cedula = forms.CharField(label="cedula")

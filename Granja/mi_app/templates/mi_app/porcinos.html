@@ -14,7 +14,7 @@
         <div class="row">
             <!-- Introduccion de la pagina -->
             <div class="col  ">
-                <h1 class="display-3">Clientes</h1>
+                <h1 class="display-3">Porcinos</h1>
                 <p class="">En este apartado encontraras la información importante de tus clientes, como su ID,
                     nombre, apellido,
                     dirección, y demas información desde los botones en la sección de acciones.</p>
@@ -76,27 +76,28 @@
             </div>
         </div>
     </div>
-
     <!-- Tabla de clienets registrados en la base de datos -->
     <div class="table-responsive">
         <table class="table table-striped">
             <thead>
                 <tr>
-                    <th class="table-header-custom" scope="col">ID</th>
-                    <th class="table-header-custom" scope="col">Nombre</th>
-                    <th class="table-header-custom" scope="col">Apellido</th>
-                    <th class="table-header-custom" scope="col">Direccion</th>
+                    <th class="table-header-custom" scope="col">Id </th>
+                    <th class="table-header-custom" scope="col">Edad</th>
+                    <th class="table-header-custom" scope="col">Peso</th>
+                    <th class="table-header-custom" scope="col">Raza</th>
+                    <th class="table-header-custom" scope="col">Id propietario</th>
                     <th class="table-header-custom" scope="col">Acciones</th>
                 </tr>
-                {% for cliente in clientes %}
+                {% for porcino in porcinos %}
             </thead>
 
             <tbody>
                 <tr>
-                    <td>{{cliente.cedula}}</td>
-                    <td>{{cliente.nombre}}</td>
-                    <td>{{cliente.apellidos}}</td>
-                    <td>{{cliente.direccion}}</td>
+                    <td>{{porcino.idporcinos}}</td>
+                    <td>{{porcino.edad}}</td>
+                    <td>{{porcino.peso}}</td>
+                    <td>{{porcino.razas_idrazas.name}}</td>
+                    <td>{{porcino.clientes_cedula.cedula}}</td>
                     <td>
 
                         <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#infoModal"
