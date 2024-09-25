@@ -22,11 +22,13 @@ function loadClienteInfo(cedula) {
                         '<strong>ID:</strong> ' + cerdo.id + '<br>' +
                         '<strong>Edad:</strong> ' + cerdo.edad + ' años<br>' +
                         '<strong>Peso:</strong> ' + cerdo.peso + ' kg<br>' +
-                        '<strong>Raza:</strong> ' + cerdo.raza +
+                        '<strong>Raza:</strong> ' + cerdo.raza + ' kg<br>' +
                         '</li>'
                     );
                 });
-                console.log(response)
+
+                
+
         } else {
             // Si no hay cerdos asociados
             $('#cerdos-list').append('<li class="list-group-item">No hay porcinos registrados para este cliente.</li>');

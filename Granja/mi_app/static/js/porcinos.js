@@ -5,12 +5,19 @@ function loadPorcinoInfo(idporcinos) {
         type: 'GET',
         success: function(response) {
             // Llenar los campos del modal con los datos del cliente
+            $('#modal-alimentacion').empty();
+            
             $('#modal-idporcino').text(response.idporcinos);
-            $('#modal-edad').text(response.edad);
+            $('#modal-edad').text(response.edad );
             $('#modal-peso').text(response.peso);
             $('#modal-raza').text(response.razas_idrazas);
-            $('#modal-alimentacion').text(response.clientes_cedula);
             $('#modal-idpropietario').text(response.clientes_cedula);
+
+            response.alimentacion.forEach(function(alimento) {
+                $('#modal-alimentacion').append(
+                    '<li>' + alimento.descripcion + ' - ' + alimento.dosis + ' KG</li>'
+                );
+            });
         
         $('#infoModal').modal('show');
 

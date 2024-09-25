@@ -18,12 +18,17 @@ from reportlab.lib.units import cm
 def index(request):
     clientes = Clientes.objects.all()
     razas = Razas.objects.all()
-    return render(request, 'mi_app/index.html', {'clientes': clientes, 'razas':razas})
+    alimentacion = Alimentacion.objects.all()
+    return render(request, 'mi_app/index.html', {'clientes': clientes, 'razas':razas, 'alimentaciones':alimentacion})
 
 def porcinos(request):
     porcinos = Porcinos.objects.all()
     print(porcinos)
     return render(request, 'mi_app/porcinos.html', {'porcinos': porcinos})
+
+def alimentacion(request):
+    alimentaciones = Alimentacion.objects.all()
+    return render(request, 'mi_app/alimentacion.html', {'alimentaciones': alimentaciones})
 
 # Define your form class
 class MyForm(forms.Form):
@@ -121,6 +126,7 @@ def agregar_porcino(request):
         edad = request.POST.get('edad')
         peso = request.POST.get('peso')
         raza_id = request.POST.get('razas_idrazas')  # Obtener el ID de la raza seleccionada
+        alimentacionForm = request.POST.get('alimentacion')
 
         # Buscar el cliente en la base de datos
         cliente = get_object_or_404(Clientes, cedula=cliente_cedula)
@@ -131,6 +137,14 @@ def agregar_porcino(request):
         # Crear un nuevo porcino y asociarlo al cliente y la raza
         porcino = Porcinos(edad=edad, peso=peso, razas_idrazas=raza, clientes_cedula=cliente)
         porcino.save()
+
+
+        alimentacion = get_object_or_404(Alimentacion, idalimentacion = alimentacionForm)
+        alimentosPorcino = PorcinosHasAlimentacion(porcinos_idporcinos = porcino, alimentacion_idalimentacion = alimentacion)
+        alimentosPorcino.save()
+
+        
+
         # Redirigir a la página de porcinos o a donde prefieras
         return redirect('index')
 
@@ -236,14 +250,28 @@ def deletePorcino(request, idPorcino):
 def getPorcino(request, idPorcino):
     porcino = Porcinos.objects.get(idporcinos = idPorcino)
     if(porcino):
-        Alimentos = Alimentacion.objects.all()
+
         AlimentosPorcino = PorcinosHasAlimentacion.objects.filter(porcinos_idporcinos = porcino.idporcinos)
+
+        alimentaciones = []
+        for relacion in AlimentosPorcino:
+        # Obtener el objeto de Alimentacion usando la relación
+            alimentacion = relacion.alimentacion_idalimentacion
+            alimentaciones.append({
+            'descripcion': alimentacion.descripcion,
+            'dosis': alimentacion.dosis
+        })
+
+        print(alimentaciones)
+      
+
         data = {
             'idporcinos': porcino.idporcinos,
             'edad': porcino.edad,
             'peso': porcino.peso,
             'razas_idrazas': porcino.razas_idrazas.name,
             'clientes_cedula': porcino.clientes_cedula.cedula,
+            'alimentacion': alimentaciones
         }
         return JsonResponse(data)
     

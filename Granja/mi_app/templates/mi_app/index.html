@@ -157,6 +157,7 @@
             </div>
             <div class="modal-body">
                 <div>
+
                     <form action="agregar_porcino" method="post">
                         {% csrf_token %}
 
@@ -181,12 +182,24 @@
                                 {% endfor %}
                             </select>
                         </div>
+
+                        <div class="mb-3">
+                            <label for="alimentacion" class="form-label">Alimentación:</label>
+                            <select id="alimentacion" name="alimentacion" class="form-control" required>
+                                <option value="">Selecciona un alimento</option>
+                                {% for alimento in alimentaciones %}
+                                <option value="{{ alimento.idalimentacion }}">
+                                    {{ alimento.descripcion }} - {{alimento.dosis}} KG</option>
+                                {% endfor %}
+                            </select>
+                        </div>
                 </div>
                 <input type="submit" class="btn btn-success">
-                </form>
             </div>
+            </form>
         </div>
     </div>
+</div>
 </div>
 
 

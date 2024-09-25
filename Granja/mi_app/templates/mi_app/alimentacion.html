@@ -14,17 +14,15 @@
         <div class="row">
             <!-- Introduccion de la pagina -->
             <div class="col  ">
-                <h1 class="display-3">Porcinos</h1>
-                <p class="">En este apartado encontraras la información importante sobre los porcinos de tu granja, como
-                    su ID,
-                    peso, raza y
-                    Alimentación, demas información desde los botones en la sección de acciones.</p>
+                <h1 class="display-3">Alimentación</h1>
+                <p class="">En este apartado encontraras la información importante sobre los planes o elementos
+                    requeridos para la alimentación de los porcinos registrados en la granja</p>
             </div>
 
             <!-- Información sobre botones disponibles para clientes registrados -->
             <div class="col d-grid gap-3">
                 <div>
-                    <p>Las acciones disponibles para los porcinos registrados son: </p>
+                    <p>Las acciones disponibles para los clientes registrados son: </p>
                     <button type="button" class="btn btn-primary">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                             class="bi bi-search" viewBox="0 0 16 16">
@@ -80,22 +78,16 @@
             <thead>
                 <tr>
                     <th class="table-header-custom" scope="col">Id </th>
-                    <th class="table-header-custom" scope="col">Edad</th>
-                    <th class="table-header-custom" scope="col">Peso</th>
-                    <th class="table-header-custom" scope="col">Raza</th>
-                    <th class="table-header-custom" scope="col">Id propietario</th>
+                    <th class="table-header-custom" scope="col">Descripción</th>
                     <th class="table-header-custom" scope="col">Acciones</th>
                 </tr>
-                {% for porcino in porcinos %}
+                {% for alimentacion in alimentaciones %}
             </thead>
 
             <tbody>
                 <tr>
-                    <td>{{porcino.idporcinos}}</td>
-                    <td>{{porcino.edad}}</td>
-                    <td>{{porcino.peso}}</td>
-                    <td>{{porcino.razas_idrazas.name}}</td>
-                    <td>{{porcino.clientes_cedula.cedula}}</td>
+                    <td>{{alimentacion.idalimentacion}}</td>
+                    <td>{{alimentacion.descripcion}}</td>
                     <td>
 
                         <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#infoModal"
@@ -204,8 +196,8 @@
                 <p><strong>Edad:</strong> <span id="modal-edad"></span></p>
                 <p><strong>Peso:</strong> <span id="modal-peso"></span></p>
                 <p><strong>Raza:</strong> <span id="modal-raza"></span></p>
-                <p><strong>Id propietario:</strong> <span id="modal-idpropietario"></span></p>
                 <p><strong>Alimentación:</strong> <span id="modal-alimentacion"></span></p>
+                <p><strong>Id propietario:</strong> <span id="modal-idpropietario"></span></p>
                 <hr>
             </div>
         </div>
