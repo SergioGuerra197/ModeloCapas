@@ -311,3 +311,43 @@ def agregarAlimentacion(request):
         return redirect('alimentacion')  # Cambia esto al nombre de la vista
 
     return HttpResponse("Método no permitido", status=405)
+
+def deleteAlimento(request, idalimentacion):
+
+    alimento = Alimentacion.objects.get(idalimentacion = idalimentacion)
+    if(alimento):
+
+        alimentosPorcino = PorcinosHasAlimentacion.objects.filter(alimentacion_idalimentacion = idalimentacion)
+
+        alimentosPorcino.delete()
+
+        alimento.delete()
+
+        return redirect('alimentacion')
+    
+    return render(request, "mi_app/alimentacion/all.html", {"msg": "Error al eliminar el alimento"})
+
+def editarDosis(request, idalimentacion):
+    alimento = get_object_or_404(Alimentacion, idalimentacion = idalimentacion )
+    if request.method == 'POST':
+        # Actualizar los campos del cliente con los datos enviados en el formulario
+        alimento.dosis = request.POST.get('dosis')  
+        print(alimento.dosis)        # Guardar los cambios en la base de datos
+        alimento.save()
+
+        # Redirigir a la página principal después de actualizar
+        return redirect('alimentacion')
+
+    return HttpResponse("Método no permitido", status=405)
+
+
+def getAlimento(request, idalimentacion):
+    # Obtener el cliente de la base de datos según la cédula
+
+    alimento = get_object_or_404(Alimentacion, idalimentacion = idalimentacion )
+    data = {
+        'idalimentacion': alimento.idalimentacion,
+        'descripcion': alimento.descripcion,
+        'dosis': alimento.dosis,
+    }
+    return JsonResponse(data)
