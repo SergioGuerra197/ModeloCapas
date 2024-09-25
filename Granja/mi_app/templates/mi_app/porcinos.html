@@ -67,7 +67,7 @@
                                 d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4" />
                         </svg>
                     </button>
-                    <span>Agregar porcino</span>
+                    <span>Agregar alimentacion al porcino</span>
                 </div>
 
             </div>
@@ -128,7 +128,8 @@
                             </svg>
                         </button>
 
-                        <button type="button" class="btn btn-secondary">
+                        <button type="button" class="btn btn-secondary" data-bs-toggle="modal"
+                            data-bs-target="#insertarAlimentacionModal">
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                                 class="bi bi-plus" viewBox="0 0 16 16">
                                 <path
@@ -228,6 +229,37 @@
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
                 <!-- Botón que confirma la eliminación -->
                 <a id="confirmarEliminarBtn" href="#" class="btn btn-danger">Eliminar</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade" id="alimentacionPorcinoModal" tabindex="-1" aria-labelledby="alimentacionPorcinoLabel"
+    aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="alimentacionPorcinoLabel">Agregar alimentacion</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <!-- Formulario para actualizar el cliente -->
+                <form id="formEditarPorcino" method="POST" action="#">
+                    {% csrf_token %}
+                    <!-- Campo para Cédula (no editable) -->
+                    <div class="mb-3">
+                        <label for="alimentacion" class="form-label">Alimentación:</label>
+                        <select id="alimentacion" name="alimentacion" class="form-control" required>
+                            <option value="">Selecciona un alimento</option>
+                            {% for alimento in alimentaciones %}
+                            <option value="{{ alimento.idalimentacion }}">
+                                {{ alimento.descripcion }} - {{alimento.dosis}} KG</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Guardar Cambios</button>
+                </form>
             </div>
         </div>
     </div>

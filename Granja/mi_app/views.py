@@ -23,8 +23,8 @@ def index(request):
 
 def porcinos(request):
     porcinos = Porcinos.objects.all()
-    print(porcinos)
-    return render(request, 'mi_app/porcinos.html', {'porcinos': porcinos})
+    alimentacion = Alimentacion.objects.all()
+    return render(request, 'mi_app/porcinos.html', {'porcinos': porcinos, 'alimentaciones':alimentacion})
 
 def alimentacion(request):
     alimentaciones = Alimentacion.objects.all()
@@ -37,6 +37,11 @@ class MyForm(forms.Form):
     apellidos = forms.CharField(label="apellidos")
     direccion = forms.CharField(label="direccion")
     telefono = forms.CharField(label="telefono")
+
+class MyFormAlimentacion(forms.Form):
+    idalimentacion = forms.CharField(label="idalimentacion")
+    descripcion = forms.CharField(label="descripcion")
+    dosis = forms.CharField(label="dosis")
 
 def add(request):
    if(request.method == 'POST'):
@@ -290,5 +295,19 @@ def actualizarPorcino(request, idPorcino):
 
             # Redirigir a la página principal después de actualizar
             return redirect('porcinos')
+
+    return HttpResponse("Método no permitido", status=405)
+
+def agregarAlimentacion(request):
+    if request.method == 'POST':
+        descripcion = request.POST.get('descripcion')
+        dosis = request.POST.get('dosis')
+
+        # Crear un nuevo objeto de Alimentacion y guardarlo en la base de datos
+        nueva_alimentacion = Alimentacion(descripcion=descripcion, dosis=dosis)
+        nueva_alimentacion.save()
+
+        # Redirigir a una página de éxito o a donde desees
+        return redirect('alimentacion')  # Cambia esto al nombre de la vista
 
     return HttpResponse("Método no permitido", status=405)
