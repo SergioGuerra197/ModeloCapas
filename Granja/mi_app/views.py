@@ -217,4 +217,16 @@ def reportClientes(request):
     return response
 
 
-#----------------- REPORTES -------------------------------
+# Sección porcinos
+
+
+def deletePorcino(request, idPorcino):
+    porcino = Porcinos.objects.get(idporcinos = idPorcino)
+    if(porcino):
+        alimentosPorcino = PorcinosHasAlimentacion.objects.filter(porcinos_idporcinos = porcino)
+
+        alimentosPorcino.delete()
+
+        Porcinos.delete(porcino)
+        return redirect('porcinos')
+    return redirect('porcinos')

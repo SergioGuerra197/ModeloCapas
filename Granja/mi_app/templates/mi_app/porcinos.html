@@ -19,10 +19,6 @@
                     su ID,
                     peso, raza y
                     Alimentación, demas información desde los botones en la sección de acciones.</p>
-                <button type="button" class="btn btn-success py-4 my-4" data-bs-toggle="modal"
-                    data-bs-target="#exampleModal">
-                    Registrar porcino
-                </button>
             </div>
 
             <!-- Información sobre botones disponibles para clientes registrados -->
@@ -78,7 +74,7 @@
         </div>
     </div>
 
-    <!-- Tabla de clienets registrados en la base de datos -->
+    <!-- Tabla de porcinos registrados en la base de datos -->
     <div class="table-responsive">
         <table class="table table-striped">
             <thead>
@@ -112,7 +108,8 @@
                         </button>
 
                         <button type="button" class="btn btn-danger" data-bs-toggle="modal"
-                            data-bs-target="#eliminarClienteModal" onclick="setEliminarCliente('{{ cliente.cedula }}')">
+                            data-bs-target="#eliminarPorcinoModal"
+                            onclick="setEliminarPorcino('{{ porcino.idporcinos }}')">
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                                 class="bi bi-trash" viewBox="0 0 16 16">
                                 <path
@@ -224,16 +221,16 @@
 </div>
 
 <!-- Modal de confirmación de eliminación -->
-<div class="modal fade" id="eliminarClienteModal" tabindex="-1" aria-labelledby="eliminarClienteLabel"
+<div class="modal fade" id="eliminarPorcinoModal" tabindex="-1" aria-labelledby="eliminaPorcinoLabel"
     aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="eliminarClienteLabel">Eliminar porcino</h5>
+                <h5 class="modal-title" id="eliminaPorcinoLabel">Eliminar porcino</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                ¿Estás seguro de que quieres eliminar este cliente? Esta acción no se puede deshacer.
+                ¿Estás seguro de que quieres eliminar este porcino? Esta acción no se puede deshacer.
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
@@ -244,61 +241,10 @@
     </div>
 </div>
 
-
-
-<!-- Modal agregar cliente -->
-<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Agregar porcino</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <div>
-                    <form action="save" method="post">
-                        {% csrf_token %}
-
-                        <div class="mb-3">
-                            <label for="cedula" class="form-label">Cédula:</label>
-                            <input id="cedula" type="number" class="form-control" name="cedula" required>
-                        </div>
-
-                        <div class="mb-3">
-                            <label for="nombre" class="form-label">Nombre:</label>
-                            <input id="nombre" type="text" class="form-control" name="nombre" required>
-                        </div>
-
-                        <div class="mb-3">
-                            <label for="apellidos" class="form-label">Apellidos:</label>
-                            <input id="apellidos" type="text" class="form-control" name="apellidos" required>
-                        </div>
-
-                        <div class="mb-3">
-                            <label for="direccion" class="form-label">Dirección:</label>
-                            <input id="direccion" type="text" class="form-control" name="direccion" required>
-                        </div>
-
-                        <div class="mb-3">
-                            <label for="telefono" class="form-label">Teléfono:</label>
-                            <input id="telefono" type="number" class="form-control" name="telefono" required>
-                        </div>
-
-                        <input type="submit" class="btn btn-success" value="Agregar cliente">
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
+{% block extra_js %}
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="{% static 'js/porcinos.js' %}"></script>{% endblock %}
 
 
 
-
-
-    {% block extra_js %}
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="{% static 'js/index.js' %}"></script>{% endblock %}
-
-
-
-    {% endblock %}
+{% endblock %}
