@@ -248,3 +248,19 @@ def getPorcino(request, idPorcino):
         return JsonResponse(data)
     
     return redirect("/")
+
+def actualizarPorcino(request, idPorcino):
+     
+    porcino = get_object_or_404(Porcinos, idporcinos=idPorcino)
+    
+    if request.method == 'POST':
+            # Actualizar los campos del cliente con los datos enviados en el formulario
+            porcino.edad = request.POST.get('edad')
+            porcino.peso = request.POST.get('peso')
+            # Guardar los cambios en la base de datos
+            porcino.save()
+
+            # Redirigir a la página principal después de actualizar
+            return redirect('porcinos')
+
+    return HttpResponse("Método no permitido", status=405)

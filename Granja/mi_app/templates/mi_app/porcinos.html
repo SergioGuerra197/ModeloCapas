@@ -120,7 +120,7 @@
                         </button>
 
                         <button type="button" class="btn btn-warning" data-bs-toggle="modal"
-                            onclick="setEditarCliente('{{ cliente.cedula }}')">
+                            onclick="setEditarPorcino('{{ porcino.idporcinos }}')">
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                                 class="bi bi-pencil" viewBox="0 0 16 16">
                                 <path
@@ -148,41 +148,38 @@
 
 <!-- Modal modificar información del cliente -->
 <!-- Modal para editar la información del cliente -->
-<div class="modal fade" id="editarClienteModal" tabindex="-1" aria-labelledby="editarClienteLabel" aria-hidden="true">
+<div class="modal fade" id="editarPorcinoModal" tabindex="-1" aria-labelledby="editarPorcinoLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="editarClienteLabel">Editar Información del porcino</h5>
+                <h5 class="modal-title" id="editarPorcinoLabel">Editar Información del porcino</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
                 <!-- Formulario para actualizar el cliente -->
-                <form id="formEditarCliente" method="POST" action="#">
+                <form id="formEditarPorcino" method="POST" action="#">
                     {% csrf_token %}
                     <!-- Campo para Cédula (no editable) -->
                     <div class="mb-3">
-                        <label for="cedula" class="form-label">Cédula:</label>
-                        <input id="modal-cedula" type="text" class="form-control" name="cedula" readonly>
+                        <label for="modal-idporcino-mod" class="form-label">Id porcino:</label>
+                        <input id="modal-idporcino-mod" type="text" class="form-control" name="modal-idporcino-mod"
+                            readonly>
                     </div>
                     <!-- Campo para Nombre -->
                     <div class="mb-3">
-                        <label for="nombre" class="form-label">Nombre:</label>
-                        <input id="modal-nombre" type="text" class="form-control" name="nombre" required>
+                        <label for="modal-edad-mod" class="form-label">Edad:</label>
+                        <input id="modal-edad-mod" type="text" class="form-control" name="edad" required>
                     </div>
                     <!-- Campo para Apellidos -->
                     <div class="mb-3">
-                        <label for="apellidos" class="form-label">Apellidos:</label>
-                        <input id="modal-apellidos" type="text" class="form-control" name="apellidos" required>
-                    </div>
-                    <!-- Campo para Dirección -->
-                    <div class="mb-3">
-                        <label for="direccion" class="form-label">Dirección:</label>
-                        <input id="modal-direccion" type="text" class="form-control" name="direccion" required>
+                        <label for="modal-peso-mod" class="form-label">Peso:</label>
+                        <input id="modal-peso-mod" type="text" class="form-control" name="peso" required>
                     </div>
                     <!-- Campo para Teléfono -->
                     <div class="mb-3">
-                        <label for="telefono" class="form-label">Teléfono:</label>
-                        <input id="modal-telefono" type="text" class="form-control" name="telefono" required>
+                        <label for="modal-idpropietario-mod" class="form-label">Id propietario:</label>
+                        <input id="modal-idpropietario-mod" type="text" class="form-control"
+                            name="modal-idpropietario-mod" readonly>
                     </div>
                     <button type="submit" class="btn btn-primary">Guardar Cambios</button>
                 </form>

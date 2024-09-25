@@ -16,7 +16,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from mi_app.views import add, eliminarCliente, porcinos, agregar_porcino, deletePorcino, getPorcino
+from mi_app.views import add, eliminarCliente, porcinos, agregar_porcino, deletePorcino, getPorcino, actualizarPorcino
 from mi_app.views import index
 from mi_app.views import get_cliente
 from mi_app.views import actualizarCliente
@@ -34,4 +34,5 @@ urlpatterns = [
     path("report", reportClientes),
     path("porcino/profile/<int:idPorcino>/", getPorcino, name="getPorcino"),
     path("porcino/delete/<int:idPorcino>/", deletePorcino, name="deletePorcino"),
+    path("actualizar_porcino/<int:idPorcino>/", actualizarPorcino, name="actualizar_porcino")
 ]
