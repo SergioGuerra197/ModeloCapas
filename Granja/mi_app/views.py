@@ -1,7 +1,7 @@
 from django.shortcuts import get_object_or_404, render, redirect
 from django.http import HttpResponse, JsonResponse
 from django import forms
-from mi_app.models import Clientes, Porcinos, PorcinosHasAlimentacion, Razas
+from mi_app.models import Alimentacion, Clientes, Porcinos, PorcinosHasAlimentacion, Razas
 
 
 from datetime import datetime
@@ -230,3 +230,21 @@ def deletePorcino(request, idPorcino):
         Porcinos.delete(porcino)
         return redirect('porcinos')
     return redirect('porcinos')
+
+
+
+def getPorcino(request, idPorcino):
+    porcino = Porcinos.objects.get(idporcinos = idPorcino)
+    if(porcino):
+        Alimentos = Alimentacion.objects.all()
+        AlimentosPorcino = PorcinosHasAlimentacion.objects.filter(porcinos_idporcinos = porcino.idporcinos)
+        data = {
+            'idporcinos': porcino.idporcinos,
+            'edad': porcino.edad,
+            'peso': porcino.peso,
+            'razas_idrazas': porcino.razas_idrazas.name,
+            'clientes_cedula': porcino.clientes_cedula.cedula,
+        }
+        return JsonResponse(data)
+    
+    return redirect("/")
