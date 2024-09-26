@@ -7,3 +7,18 @@ class clienteSerializer(serializers.ModelSerializer):
         model = Clientes
         # fields = ('fullname', 'nickname')
         fields = '__all__'
+
+class porcinoSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Porcinos
+        fields = '__all__'
+
+class alimentosSerializer(serializers.ModelSerializer):
+    class Meta: 
+        model = Alimentacion
+        fields = '__all__'
+
+class porcinosHasAlimentacionSerializer(serializers.ModelSerializer):
+    class Meta: 
+        model = PorcinosHasAlimentacion
+        fields = '__all__'
