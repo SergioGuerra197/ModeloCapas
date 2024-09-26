@@ -14,6 +14,7 @@ from reportlab.pdfgen import canvas
 from reportlab.lib.pagesizes import A4
 from django.http import HttpResponse
 from reportlab.lib.units import cm
+from django.views.decorators.csrf import csrf_exempt
 
 def index(request):
     clientes = Clientes.objects.all()
@@ -61,6 +62,7 @@ def add(request):
    
    return render(request, "mi_app/index.html")
 
+@csrf_exempt
 def get_cliente(request, cedula):
     # Obtener el cliente de la base de datos según la cédula
 
