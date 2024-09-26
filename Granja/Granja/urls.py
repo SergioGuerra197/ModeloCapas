@@ -15,7 +15,7 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, include
 from mi_app.views import add, eliminarCliente, porcinos, agregar_porcino, deletePorcino, getPorcino, actualizarPorcino, alimentacion, agregarAlimentacion, deleteAlimento, editarDosis, getAlimento
 from mi_app.views import index
 from mi_app.views import get_cliente
@@ -39,6 +39,6 @@ urlpatterns = [
     path('agregarAlimentacion', agregarAlimentacion, name = 'agregarAlimentacion'),
     path('eliminarAlimento/<int:idalimentacion>/', deleteAlimento, name= 'eliminarAlimento'),
     path('alimento/<int:idalimentacion>/', getAlimento, name = 'getAlimento'),
-    path('editarDosis/<int:idalimentacion>/', editarDosis , name = 'editarDosis' )
-    # path('agregar_porcino_alimentacion/<int:idAlimentacion>/', agregar_porcino_alimentacion, name = 'agregarPorcinoAlimentacion')
+    path('editarDosis/<int:idalimentacion>/', editarDosis , name = 'editarDosis' ),
+    path('api/v1/', include('mi_app_rest.urls')),
 ]
