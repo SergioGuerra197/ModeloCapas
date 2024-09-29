@@ -32,3 +32,7 @@ class porcinosHasAlimentacionViewSet(viewsets.ModelViewSet):
             queryset = queryset.filter(alimentacion_idalimentacion=alimentacion_id)
 
         return queryset
+
+class razasViewSet(viewsets.ModelViewSet):
+    queryset = Razas.objects.all()
+    serializer_class = razasSerializer
