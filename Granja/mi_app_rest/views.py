@@ -1,6 +1,6 @@
 from rest_framework import viewsets
 from .models import *
-from .serializer import clienteSerializer, porcinoSerializer, alimentosSerializer, porcinosHasAlimentacionSerializer
+from .serializer import clienteSerializer, porcinoSerializer, alimentosSerializer, porcinosHasAlimentacionSerializer, razasSerializer
 
 # Create your views here.
 
@@ -20,3 +20,7 @@ class alimentosViewSet(viewsets.ModelViewSet):
 class porcinosHasAlimentacionViewSet(viewsets.ModelViewSet):
     queryset = PorcinosHasAlimentacion.objects.all()
     serializer_class = porcinosHasAlimentacionSerializer
+
+class razasViewSet(viewsets.ModelViewSet):
+    queryset = Razas.objects.all()
+    serializer_class = razasSerializer

@@ -22,3 +22,9 @@ class porcinosHasAlimentacionSerializer(serializers.ModelSerializer):
     class Meta: 
         model = PorcinosHasAlimentacion
         fields = '__all__'
+        
+
+class razasSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Razas
+        fields = '__all__'

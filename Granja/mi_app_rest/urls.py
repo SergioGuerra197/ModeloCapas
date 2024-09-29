@@ -7,7 +7,8 @@ router.register(r'clientes', views.clienteViewSet)
 router.register(r'porcinos', views.porcinosViewSet)
 router.register(r'alimentos', views.alimentosViewSet)
 router.register(r'hasAlimentacion', views.porcinosHasAlimentacionViewSet)
+router.register(r'razas', views.razasViewSet)
 
 urlpatterns = [
-    path('', include(router.urls))
+    path('', include(router.urls)) 
 ]
