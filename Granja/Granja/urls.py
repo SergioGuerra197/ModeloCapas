@@ -21,7 +21,7 @@ from mi_app.views import index
 from mi_app.views import get_cliente
 from mi_app.views import actualizarCliente
 from mi_app.views import reportClientes
-from rest_framework.documentation import include_docs_urls
+#from rest_framework.documentation import include_docs_urls
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -42,5 +42,5 @@ urlpatterns = [
     path('alimento/<int:idalimentacion>/', getAlimento, name = 'getAlimento'),
     path('editarDosis/<int:idalimentacion>/', editarDosis , name = 'editarDosis' ),
     path('api/v1/', include('mi_app_rest.urls')),
-    path('docs/', include_docs_urls(title='Api Documentation'))
+    #path('docs/', include_docs_urls(title='Api Documentation'))
 ]

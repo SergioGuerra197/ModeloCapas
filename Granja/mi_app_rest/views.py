@@ -21,6 +21,14 @@ class porcinosHasAlimentacionViewSet(viewsets.ModelViewSet):
     queryset = PorcinosHasAlimentacion.objects.all()
     serializer_class = porcinosHasAlimentacionSerializer
 
-class razasViewSet(viewsets.ModelViewSet):
-    queryset = Razas.objects.all()
-    serializer_class = razasSerializer
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        porcinos_id = self.request.query_params.get('porcinos_idporcinos', None)
+        alimentacion_id = self.request.query_params.get('alimentacion_idalimentacion', None)
+
+        if porcinos_id is not None:
+            queryset = queryset.filter(porcinos_idporcinos=porcinos_id)
+        if alimentacion_id is not None:
+            queryset = queryset.filter(alimentacion_idalimentacion=alimentacion_id)
+
+        return queryset
