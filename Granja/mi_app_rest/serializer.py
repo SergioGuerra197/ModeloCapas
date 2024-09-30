@@ -9,6 +9,10 @@ class clienteSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 class porcinoSerializer(serializers.ModelSerializer):
+    
+    razas_idrazas = serializers.PrimaryKeyRelatedField(queryset=Razas.objects.all())
+    clientes_cedula = serializers.PrimaryKeyRelatedField(queryset=Clientes.objects.all())
+
     class Meta:
         model = Porcinos
         fields = '__all__'
