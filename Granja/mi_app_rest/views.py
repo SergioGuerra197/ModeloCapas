@@ -13,6 +13,15 @@ class porcinosViewSet(viewsets.ModelViewSet):
     queryset = Porcinos.objects.all()
     serializer_class = porcinoSerializer
 
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        clientes_cedula = self.request.query_params.get('clientes_cedula', None)
+        
+        if clientes_cedula is not None:
+            queryset = queryset.filter(clientes_cedula=clientes_cedula)
+        
+        return queryset
+
 class alimentosViewSet(viewsets.ModelViewSet):
     queryset = Alimentacion.objects.all()
     serializer_class = alimentosSerializer
